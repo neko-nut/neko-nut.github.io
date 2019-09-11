@@ -5,19 +5,22 @@
   
 
   
-  <title>黑猫の坚果</title>
+  <title>Bellman-Ford:负权值最短路径 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="试图开博客">
-<meta name="keywords" content="personal blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="黑猫の坚果">
-<meta property="og:url" content="http://nekonut.github.io/index.html">
+  <meta name="description" content="关于 Bellman-Ford 算法Bellman-Ford 算法是解决单起点最短路径问题的一种算法，由 Lester Ford 发表于1956年，Richard Bellman 发表于1958年。他和 Dijkstra 算法比较相似，都以松弛为基础。然而，Dijkstra 算法每次仅对收录点的出边的终点进行松弛，无法处理路径中的负边对已收录点的连锁影响（知乎上有详细解释 (= . =)，这里就不">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bellman-Ford:负权值最短路径">
+<meta property="og:url" content="http://nekonut.github.io/2019/09/04/bellman-ford/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
-<meta property="og:description" content="试图开博客">
+<meta property="og:description" content="关于 Bellman-Ford 算法Bellman-Ford 算法是解决单起点最短路径问题的一种算法，由 Lester Ford 发表于1956年，Richard Bellman 发表于1958年。他和 Dijkstra 算法比较相似，都以松弛为基础。然而，Dijkstra 算法每次仅对收录点的出边的终点进行松弛，无法处理路径中的负边对已收录点的连锁影响（知乎上有详细解释 (= . =)，这里就不">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://nekonut.github.io/2019/09/04/bellman-ford/bellman-ford.png">
+<meta property="og:updated_time" content="2019-09-11T00:45:08.457Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="黑猫の坚果">
-<meta name="twitter:description" content="试图开博客">
+<meta name="twitter:title" content="Bellman-Ford:负权值最短路径">
+<meta name="twitter:description" content="关于 Bellman-Ford 算法Bellman-Ford 算法是解决单起点最短路径问题的一种算法，由 Lester Ford 发表于1956年，Richard Bellman 发表于1958年。他和 Dijkstra 算法比较相似，都以松弛为基础。然而，Dijkstra 算法每次仅对收录点的出边的终点进行松弛，无法处理路径中的负边对已收录点的连锁影响（知乎上有详细解释 (= . =)，这里就不">
+<meta name="twitter:image" content="http://nekonut.github.io/2019/09/04/bellman-ford/bellman-ford.png">
   
     <link rel="alternate" href="/atom.xml" title="黑猫の坚果" type="application/atom+xml">
   
@@ -64,9 +67,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-bellman-ford" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-bellman-ford" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/09/04/bellman-ford/" class="article-date">
   <time datetime="2019-09-04T05:57:09.395Z" itemprop="datePublished">2019-09-04</time>
@@ -79,8 +80,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/04/bellman-ford/">Bellman-Ford:负权值最短路径</a>
+    <h1 class="article-title" itemprop="name">
+      Bellman-Ford:负权值最短路径
     </h1>
   
 
@@ -128,53 +129,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-博客建立撒花！" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/19/博客建立撒花！/" class="article-date">
-  <time datetime="2019-04-19T12:37:01.000Z" itemprop="datePublished">2019-04-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/19/博客建立撒花！/">博客上线撒花！</a>
-    </h1>
+    <a href="/2019/04/19/博客建立撒花！/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">博客上线撒花！</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="咕了好久的博客终于上线啦！！！"><a href="#咕了好久的博客终于上线啦！！！" class="headerlink" title="咕了好久的博客终于上线啦！！！"></a>咕了好久的博客终于上线啦！！！</h4><p>虽然是在大佬的帮助下才建立起来的 orz</p>
-<p>感觉还有好多好多要学习的……全新的hexo，依然不太熟悉的git，还有算法数据库操作系统等等等等。和大佬近距离接触总是让人瑟瑟发抖，很多东西根本还是在我的知识体系之外，连摸到边都要花很久时间。</p>
-<p>但还是希望用博客记录下成长的一点一滴，分享新学到的东西，也希望终有一天这个博客可以产出自己的教程，能给和现在的我一样的新手小白一些帮助。</p>
-<p>让博客和我一起成长叭。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://nekonut.github.io/2019/04/19/博客建立撒花！/" data-id="ck0dpcvjk0003pouqbst843vc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
