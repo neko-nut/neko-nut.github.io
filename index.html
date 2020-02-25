@@ -92,7 +92,7 @@
       
         <p>在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类，转成 String，再存储在 sharedPreferences 中。</p>
 <p>首先要导入 Gson 的依赖包。从左上角 File 进入 Project structure，点击 + 加入依赖：</p>
- 
+<img src="/2020/02/25/Android保存小技巧/gson.PNG" title="加入依赖"> 
 <p>具体代码：</p>
 <p>将特定的类存储在 sharePerference 中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一个叫 game 的 sharedPreferences</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"game"</span>, Activity.MODE_PRIVATE);</span><br><span class="line">SharedPreferences.Editor editor = sharedPreferences.edit();</span><br><span class="line"><span class="comment">// 通过 Gson 将 Game 类转为 json 格式的 String</span></span><br><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">String g =  gson.toJson(game);</span><br><span class="line"><span class="comment">// 将获得的 String 存入 sharedPreferences</span></span><br><span class="line">editor.putString(<span class="string">"game"</span>, g);</span><br><span class="line">editor.apply();</span><br></pre></td></tr></table></figure>
