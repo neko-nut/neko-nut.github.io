@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Android 保存小技巧 | 黑猫の坚果</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 保存小技巧">
+<meta property="og:url" content="http://nekonut.github.io/2020/02/25/Android保存小技巧/index.html">
+<meta property="og:site_name" content="黑猫の坚果">
+<meta property="og:description" content="在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-02-25T07:23:13.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 保存小技巧">
+<meta name="twitter:description" content="在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类">
+  
+    <link rel="alternate" href="/atom.xml" title="黑猫の坚果" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">黑猫の坚果</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://nekonut.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Android保存小技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/25/Android保存小技巧/" class="article-date">
+  <time datetime="2020-02-25T07:23:13.000Z" itemprop="datePublished">2020-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 保存小技巧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类，转成 String，再存储在 sharedPreferences 中。</p>
+<p>首先要导入 Gson 的依赖包。从左上角 File 进入 Project structure，点击 + 加入依赖：</p>
+ 
+<p>具体代码：</p>
+<p>将特定的类存储在 sharePerference 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一个叫 game 的 sharedPreferences</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"game"</span>, Activity.MODE_PRIVATE);</span><br><span class="line">SharedPreferences.Editor editor = sharedPreferences.edit();</span><br><span class="line"><span class="comment">// 通过 Gson 将 Game 类转为 json 格式的 String</span></span><br><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">String g =  gson.toJson(game);</span><br><span class="line"><span class="comment">// 将获得的 String 存入 sharedPreferences</span></span><br><span class="line">editor.putString(<span class="string">"game"</span>, g);</span><br><span class="line">editor.apply();</span><br></pre></td></tr></table></figure>
+<p>从 sharePerferences 中取出需要的类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得那个叫 game 的 sharedPreferences</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"game"</span>, Activity.MODE_PRIVATE);</span><br><span class="line"><span class="comment">// 将 String 从 sharedPreferences 里取出并重新解析成 Game 类</span></span><br><span class="line">String g = sharedPreferences.getString(<span class="string">"game"</span>, <span class="string">""</span>);</span><br><span class="line">Game game = gson.fromJson(g, Game.class);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://nekonut.github.io/2020/02/25/Android保存小技巧/" data-id="ck71kclnk0003s8uq60ya3qro" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/11/Android-SQLite/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android &amp; SQLite 简易入门</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL数据库/">SQL数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/日志/">日志</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/SQL数据库/" style="font-size: 10px;">SQL数据库</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/02/25/Android保存小技巧/">Android 保存小技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/11/Android-SQLite/">Android &amp; SQLite 简易入门</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/04/bellman-ford/">Bellman-Ford:负权值最短路径</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/19/博客建立撒花！/">博客上线撒花！</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 黑猫<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

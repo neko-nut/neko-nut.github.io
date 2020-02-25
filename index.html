@@ -68,6 +68,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android保存小技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/25/Android保存小技巧/" class="article-date">
+  <time datetime="2020-02-25T07:23:13.000Z" itemprop="datePublished">2020-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/25/Android保存小技巧/">Android 保存小技巧</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如说有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类，转成 String，再存储在 sharedPreferences 中。</p>
+<p>首先要导入 Gson 的依赖包。从左上角 File 进入 Project structure，点击 + 加入依赖：</p>
+ 
+<p>具体代码：</p>
+<p>将特定的类存储在 sharePerference 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一个叫 game 的 sharedPreferences</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"game"</span>, Activity.MODE_PRIVATE);</span><br><span class="line">SharedPreferences.Editor editor = sharedPreferences.edit();</span><br><span class="line"><span class="comment">// 通过 Gson 将 Game 类转为 json 格式的 String</span></span><br><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">String g =  gson.toJson(game);</span><br><span class="line"><span class="comment">// 将获得的 String 存入 sharedPreferences</span></span><br><span class="line">editor.putString(<span class="string">"game"</span>, g);</span><br><span class="line">editor.apply();</span><br></pre></td></tr></table></figure>
+<p>从 sharePerferences 中取出需要的类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得那个叫 game 的 sharedPreferences</span></span><br><span class="line">SharedPreferences sharedPreferences = getSharedPreferences(<span class="string">"game"</span>, Activity.MODE_PRIVATE);</span><br><span class="line"><span class="comment">// 将 String 从 sharedPreferences 里取出并重新解析成 Game 类</span></span><br><span class="line">String g = sharedPreferences.getString(<span class="string">"game"</span>, <span class="string">""</span>);</span><br><span class="line">Game game = gson.fromJson(g, Game.class);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://nekonut.github.io/2020/02/25/Android保存小技巧/" data-id="ck71kclnk0003s8uq60ya3qro" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Android-SQLite" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/02/11/Android-SQLite/" class="article-date">
@@ -103,8 +149,8 @@
 <h3 id="读"><a href="#读" class="headerlink" title="读"></a>读</h3><p>首先通过 <code>hepler</code> 来获得数据库，然后调用数据库的 <code>query()</code> 函数来获得数据。<code>query()</code> 函数会返回一个存储着数据的 <code>cursor</code> （类似于一个 <code>Iterator</code> 里面存 <code>Map</code>）。假设我们需要在 classes 表里获得第一天按 id 排的前五节课的 id 和课名（<code>SELECT id, name FROM classes WHERE day =3 ORDER BY id DESC LIMIT 5</code>）代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 helper 获得一个只读数据库</span></span><br><span class="line">SQLiteDatabase college = helper.getReadableDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用数据库的 query 函数</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数：表名</span></span><br><span class="line"><span class="comment">第二个参数：所有需要选定的列，用字符串数组传入，若需要所有的则可以为 null</span></span><br><span class="line"><span class="comment">第三个参数：条件，SQL 语句 while 部分，参数的值可以用 ？代替（防止 SQL 注入），没有为 null</span></span><br><span class="line"><span class="comment">第四个参数：将参数填入前面的语句，用字符串数组传入，和前面的 ？一一对应，没有为 null</span></span><br><span class="line"><span class="comment">第五个参数：group by，SQL 语句 'GROUP BY' 部分，没有则为 null</span></span><br><span class="line"><span class="comment">第六个参数：having, SQL 语句 'HAVING' 的部分，没有则为 null</span></span><br><span class="line"><span class="comment">第七个参数：order by，SQL 语句 'ORDER BY' 的部分，没有则为 null</span></span><br><span class="line"><span class="comment">第八个参数：limit，SQL 语句 'LIMIT' 的部分，没有则为 null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Cursor cursor = db.query(</span><br><span class="line">        Database.Classes.TABLE_NAME,              </span><br><span class="line">        <span class="keyword">new</span> String[]&#123;Database.Classes._ID, Database.Classes.COLUMN_NAME&#125;,       </span><br><span class="line">        Database.Classes.COLUMN_DAY + <span class="string">" = ?"</span>,     </span><br><span class="line">        <span class="keyword">new</span> String[]&#123;<span class="string">"3"</span>&#125;,                        </span><br><span class="line">        <span class="keyword">null</span>,                                     </span><br><span class="line">        <span class="keyword">null</span>,                                     </span><br><span class="line">        Database.Classes._ID + <span class="string">" DESC"</span>,           </span><br><span class="line">        <span class="string">"5"</span>);                                     </span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 cursor 中获取信息，并储存在一个队列的 map 中</span></span><br><span class="line"><span class="comment">// 用 cursor.getColumnIndexOrThrow() 获取列对应的序号（序号其实是按照选择时的顺序从 0 开始）</span></span><br><span class="line"><span class="comment">// 用 cursor.getString() 等通过序号获取内容</span></span><br><span class="line">List&lt;Map&lt;String, Object&gt;&gt; views = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">while</span> (cursor.moveToNext()) &#123;</span><br><span class="line">    Map&lt;String, Object&gt; m = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    m.put(<span class="string">"text1"</span>, cursor.getLong(cursor.getColumnIndexOrThrow(Database.Classes._ID)));</span><br><span class="line">    m.put(<span class="string">"text2"</span>, cursor.getString(cursor.getColumnIndexOrThrow(Database.Classes.COLUMN_NAME)));</span><br><span class="line">    views.add(m);</span><br><span class="line">&#125;</span><br><span class="line">cursor.close();</span><br></pre></td></tr></table></figure>
 <h3 id="写"><a href="#写" class="headerlink" title="写"></a>写</h3><p>一样通过 <code>hepler</code> 来获得数据库，然后调用数据库的 <code>insert()</code> 函数将数据插入数据库。<code>insert()</code> 函数会返回当前插入数据的主键。假设我们需要在 classes 表里插入 name 为 OOP，在第三天上课的课程信息（<code>INSERT INTO classes (name, day) VALUES (OOP, 3)</code>）并获得插入数据的 id，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 helper 获得可写入的数据库</span></span><br><span class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数据加入 ContentValues 中</span></span><br><span class="line"><span class="comment">// ContentValues 用法和 m、Map 类似，第一个参数 key 这里填列名，第二个参数填对应的值 </span></span><br><span class="line">ContentValues classes = <span class="keyword">new</span> ContentValues();</span><br><span class="line">classes.put(Database.Classes.COLUMN_NAME, <span class="string">"OOP"</span>);</span><br><span class="line">classes.put(Database.Classes.COLUMN_DAY, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里在数据库里加入新的一行</span></span><br><span class="line"><span class="comment">// 第一个参数：表名</span></span><br><span class="line"><span class="comment">// 第二个参数：所有可为空的列的名称，用于加入空行</span></span><br><span class="line"><span class="comment">// 第三个参数：包含列名和对应值的 ContentValues</span></span><br><span class="line"><span class="keyword">long</span> i = db.insert(Database.Classes.TABLE_NAME, <span class="keyword">null</span>, classes);</span><br></pre></td></tr></table></figure>
-<p><code>update()</code> 和 <code>insert()</code> 类似，不过返回的数值是这次改动影响的行数。假设我们需要将 id 为 1 的课改名为 OOD （<code>UPDATE classes SET name = OOD WHERE id = 1</code>），代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 helper 获得可写入的数据库</span></span><br><span class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数据加入 ContentValues 中</span></span><br><span class="line">ContentValues updates = <span class="keyword">new</span> ContentValues();</span><br><span class="line">updates.put(Database.Classes.COLUMN_NAME, <span class="string">"OOD"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里在数据库里做修改</span></span><br><span class="line"><span class="comment">// 第一个参数：表名</span></span><br><span class="line"><span class="comment">// 第二个参数：包含列名和对应值的 ContentValues</span></span><br><span class="line"><span class="comment">// 第三个参数：条件，SQL 语句 while 部分，参数的值可以用 ？代替（防止 SQL 注入），没有为 null</span></span><br><span class="line"><span class="comment">// 第四个参数：将参数填入前面的语句，用字符串数组传入，和前面的 ？一一对应，没有为 null</span></span><br><span class="line">db.update(Database.Classes.TABLE_NAME, updates, Database.Classes._ID + <span class="string">" = ?"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"1"</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 helper 获得可写入的数据库</span></span><br><span class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数据加入 ContentValues 中</span></span><br><span class="line"><span class="comment">// ContentValues 用法和 m、Map 类似，第一个参数 key 这里填列名，第二个参数填对应的值 </span></span><br><span class="line">ContentValues classes = <span class="keyword">new</span> ContentValues();</span><br><span class="line">classes.put(Database.Classes.COLUMN_NAME, <span class="string">"OOP"</span>);</span><br><span class="line">classes.put(Database.Classes.COLUMN_DAY, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里在数据库里加入新的一行</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数：表名</span></span><br><span class="line"><span class="comment">第二个参数：所有可为空的列的名称，用于加入空行</span></span><br><span class="line"><span class="comment">第三个参数：包含列名和对应值的 ContentValues</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">long</span> i = db.insert(Database.Classes.TABLE_NAME, <span class="keyword">null</span>, classes);</span><br></pre></td></tr></table></figure>
+<p><code>update()</code> 和 <code>insert()</code> 类似，不过返回的数值是这次改动影响的行数。假设我们需要将 id 为 1 的课改名为 OOD （<code>UPDATE classes SET name = OOD WHERE id = 1</code>），代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 helper 获得可写入的数据库</span></span><br><span class="line">SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数据加入 ContentValues 中</span></span><br><span class="line">ContentValues updates = <span class="keyword">new</span> ContentValues();</span><br><span class="line">updates.put(Database.Classes.COLUMN_NAME, <span class="string">"OOD"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里在数据库里做修改</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数：表名</span></span><br><span class="line"><span class="comment">第二个参数：包含列名和对应值的 ContentValues</span></span><br><span class="line"><span class="comment">第三个参数：条件，SQL 语句 while 部分，参数的值可以用 ？代替（防止 SQL 注入），没有为 null</span></span><br><span class="line"><span class="comment">第四个参数：将参数填入前面的语句，用字符串数组传入，和前面的 ？一一对应，没有为 null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">db.update(Database.Classes.TABLE_NAME, updates, Database.Classes._ID + <span class="string">" = ?"</span>, <span class="keyword">new</span> String[]&#123;<span class="string">"1"</span>&#125;);</span><br></pre></td></tr></table></figure></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
 <li><p>Android developer: <a href="https://developer.android.com/training/data-storage/sqlite#ReadDbRow" target="_blank" rel="noopener">Save data using SQLite</a></p>
 </li>
@@ -115,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://nekonut.github.io/2020/02/11/Android-SQLite/" data-id="ck6hb0lr50002t8uqt519j8s2" class="article-share-link">Share</a>
+      <a data-url="http://nekonut.github.io/2020/02/11/Android-SQLite/" data-id="ck71kclni0002s8uq9asjcoj6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL数据库/">SQL数据库</a></li></ul>
@@ -181,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://nekonut.github.io/2019/09/04/bellman-ford/" data-id="ck6hb0lr70003t8uqhhi26rpb" class="article-share-link">Share</a>
+      <a data-url="http://nekonut.github.io/2019/09/04/bellman-ford/" data-id="ck71kclnn0005s8uq2la2n7sx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -223,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://nekonut.github.io/2019/04/19/博客建立撒花！/" data-id="ck6hb0lrh000at8uq6kckcf2g" class="article-share-link">Share</a>
+      <a data-url="http://nekonut.github.io/2019/04/19/博客建立撒花！/" data-id="ck71kclno0006s8uqtl8mw7wn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日志/">日志</a></li></ul>
@@ -258,7 +304,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/SQL数据库/" style="font-size: 10px;">SQL数据库</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/SQL数据库/" style="font-size: 10px;">SQL数据库</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
   </div>
 
@@ -278,6 +324,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/25/Android保存小技巧/">Android 保存小技巧</a>
+          </li>
         
           <li>
             <a href="/2020/02/11/Android-SQLite/">Android &amp; SQLite 简易入门</a>
