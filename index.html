@@ -90,11 +90,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>一个字符串里有单词、数字、标点等各种内容，而我只需要获得其中的单词部分。为了方便，我直接用 Python 的 <code>re</code> 包里的 <code>split</code>，将非字母部分作为分隔符来去除非字母部分。</p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>一个字符串里有单词、数字、标点等各种内容，而我只需要获得其中的单词部分。为了方便，我直接用 Python 的 <code>re</code> 包里的 <code>split</code>，将非字母部分作为分隔符来去除非字母部分。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = <span class="string">"aaa bbb 11"</span></span><br><span class="line">words = re.split(<span class="string">'[^a-z]'</span>, str(doc))</span><br></pre></td></tr></table></figure>
 <p>但是这样出现了一个问题，由于这里空格和 1 都不属于 <code>a-z</code>，因此空格和每一个 1 都会分别作为分割符。这样会导致分割出很多的空字符串。比如此时得到的 <code>words</code> 包含五个元素 <code>[&#39;aaa&#39;, &#39;bbb&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</code>。但事实上我只需要字母部分，因此需要把后面的空元素从 <code>list</code> 中除去。</p>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 list 中不为空的内容取出，组合成新的 list 重新存到 words 中</span></span><br><span class="line">words = [x <span class="keyword">for</span> x <span class="keyword">in</span> words <span class="keyword">if</span> x != <span class="string">''</span>]</span><br></pre></td></tr></table></figure>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 list 中不为空的内容取出，组合成新的 list 重新存到 words 中</span></span><br><span class="line">words = [x <span class="keyword">for</span> x <span class="keyword">in</span> words <span class="keyword">if</span> x != <span class="string">''</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
 <li><a href="https://blog.csdn.net/qq_28304687/article/details/77719178" target="_blank" rel="noopener">python 四种方法删除列表里所有空格项</a></li>
 </ol>
 
