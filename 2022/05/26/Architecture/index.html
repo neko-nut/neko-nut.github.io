@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://nekonut.github.io">
   <title>软件架构风格简述 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="设计风格和设计模式设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。  设计风格（style）：较为宏观的设计，一般对应软件架构">
+  <meta name="description" content="设计风格和设计模式设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。  设计风格（style）：较为宏观的设计，一般对应软件架构层面，一般">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件架构风格简述">
 <meta property="og:url" content="http://nekonut.github.io/2022/05/26/Architecture/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
-<meta property="og:description" content="设计风格和设计模式设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。  设计风格（style）：较为宏观的设计，一般对应软件架构">
+<meta property="og:description" content="设计风格和设计模式设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。  设计风格（style）：较为宏观的设计，一般对应软件架构层面，一般">
 <meta property="og:locale">
 <meta property="og:image" content="http://nekonut.github.io/2022/05/26/Architecture/PipesandFilters.jpg">
 <meta property="og:image" content="http://nekonut.github.io/2022/05/26/Architecture/Repostory.jpg">
@@ -189,21 +189,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="设计风格和设计模式"><a href="#设计风格和设计模式" class="headerlink" title="设计风格和设计模式"></a>设计风格和设计模式</h2><p>设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。</p>
+        <h2 id="设计风格和设计模式"><a href="#设计风格和设计模式" class="headerlink" title="设计风格和设计模式"></a>设计风格和设计模式</h2><p>设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格/模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。</p>
 <ul>
 <li>设计风格（style）：较为宏观的设计，一般对应软件架构层面，一般会有对应架构图。</li>
 <li>设计模式（pattern）：如 23 种设计模式，一般对应代码层面，一般会有对应样例代码。</li>
 </ul>
 <span id="more"></span>
-
-
-<h2 id="管道-x2F-过滤器风格（Pipes-x2F-Filters-Style）"><a href="#管道-x2F-过滤器风格（Pipes-x2F-Filters-Style）" class="headerlink" title="管道&#x2F;过滤器风格（Pipes&#x2F;Filters Style）"></a>管道&#x2F;过滤器风格（Pipes&#x2F;Filters Style）</h2><p>管道&#x2F;过滤器风格使用管道和过滤器一连串的过程和事件，每个事件的输出是下一个事件的输入，连续的事件之间可能有数据缓存。</p>
+<h2 id="管道-过滤器风格（Pipes-Filters-Style）"><a href="#管道-过滤器风格（Pipes-Filters-Style）" class="headerlink" title="管道/过滤器风格（Pipes/Filters Style）"></a>管道/过滤器风格（Pipes/Filters Style）</h2><p>管道/过滤器风格使用管道和过滤器一连串的过程和事件，每个事件的输出是下一个事件的输入，连续的事件之间可能有数据缓存。</p>
 <ul>
 <li>过滤器（filter）：相互独立的数据处理器。</li>
 <li>管道（pipe）：串联各个过滤器，进行数据翻译和传输。</li>
 </ul>
 <img src="/2022/05/26/Architecture/PipesandFilters.jpg" class="" title="管道&#x2F;过滤器风格"> 
-
 <h3 id="变体"><a href="#变体" class="headerlink" title="变体"></a>变体</h3><ul>
 <li>反馈回路（feedback-loops），如 P6，将数据回传给曾经经过过的过滤器。</li>
 <li>分叉管道（splitting pipes），如 F2 和 F3，将同样数据传输给几个不同的过滤器。</li>
@@ -222,7 +219,6 @@
 </ul>
 <h2 id="仓库模型（The-Repository-Model）"><a href="#仓库模型（The-Repository-Model）" class="headerlink" title="仓库模型（The Repository Model）"></a>仓库模型（The Repository Model）</h2><p>仓库模型将所有数据存储在一个“仓库”中，在需要数据时，其他相关部分从仓库中取用数据。仓库模型通常用于需要共享大量数据的时候，可以通过共享数据库或同时更新所有子数据库实现。仓库模型包括黑板风格和仓库风格。</p>
 <img src="/2022/05/26/Architecture/Repostory.jpg" class="" title="仓库模型"> 
-
 <h4 id="黑板风格（Blackboard-Style）"><a href="#黑板风格（Blackboard-Style）" class="headerlink" title="黑板风格（Blackboard Style）"></a>黑板风格（Blackboard Style）</h4><p>当某一子系统修改了“仓库”中的数据时，所有其他子系统都会收到提醒。该提醒由一个特定的触发器（trigger）来实现。</p>
 <p>触发器包括以下三个部分：</p>
 <ul>
@@ -247,7 +243,6 @@
 <li>服务器（server）：基于自身存储的数据和请求处理办法，响应客户端请求。</li>
 </ul>
 <img src="/2022/05/26/Architecture/ClientServer.jpg" class="" title="客户端-服务器风格"> 
-
 <p>在通常情况下，一个系统可以被分成三层，即给用户显示的表现层（presentation logic），处理业务逻辑的业务层（application logic），和处理数据的数据层（data management）。根据业务层的位置不同，客户端-服务器风格又可以分为瘦客户端和胖客户端。</p>
 <ul>
 <li>瘦客户端（thin client）：只有表示层在客户端，数据和业务层都在服务器上。网络传输较少，但是对服务器性能要求较高。</li>
@@ -270,8 +265,6 @@
 <li>控制器（controller）：处理用户请求，选择恰当的视图及逻辑，给与用户反馈。</li>
 </ul>
 <img src="/2022/05/26/Architecture/MVC.jpg" class="" title="MVC 风格"> 
-
-
 <h3 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>可重用（reusability）：多个 view 可以共享一个 model，因此可以方便的重复利用 model 中的函数在不同 view 中实现同一功能.</li>
 <li>model 和 view 相互独立。确定 controller 以后，model 和 view 的改变相互不影响。</li>
@@ -283,7 +276,6 @@
 <h2 id="分层架构（Layered-Architecture）"><a href="#分层架构（Layered-Architecture）" class="headerlink" title="分层架构（Layered Architecture）"></a>分层架构（Layered Architecture）</h2><p>分层架构将软件分成多个层级，每个层级仅负责该层级的相关事务。每个层级可以访问它下层的接口以获得信息，并将处理结果封装成接口提供给它上面的层级。最底层应该不依赖于其他层级（比如数据操作），而最上层应该汇总所有功能（比如图形界面）。对于严格的分层架构，每一层仅允许获取它的下一层的信息，而宽松的分层架构允许该层调用它以下的所有层。</p>
 <p>在应用分层架构时，软件设计者可以自行定义层数以及每一层的功能。过多的层次增加数据传输的开销，而层次太少则容易分工不明确导致架构混乱。因此，如何分层，如何定义每一层的功能，是使用分成架构时需要权衡的问题。</p>
 <img src="/2022/05/26/Architecture/LayerArchitecture.jpg" class="" title="分层架构"> 
-
 <h3 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>高内聚（high cohesive）：每层仅包含一种类型的功能。</li>
 <li>安全性（security）：每一层的具体实现方式被封装在层内，其他层只能访问接口。</li>
@@ -300,12 +292,8 @@
 <h2 id="事件驱动风格（Event-Driven-Style）"><a href="#事件驱动风格（Event-Driven-Style）" class="headerlink" title="事件驱动风格（Event-Driven Style）"></a>事件驱动风格（Event-Driven Style）</h2><p>事件驱动风格主要包括管理事件输入的调度器（dispatcher）和对事件进行处理的处理器（processor）。每当出现一个新的事件（一般为用户输入或者其他相关系统的输入）时，调度器对事件进行过滤并传递给合适的处理器。处理器再对事件进行处理并给出反馈。系统运行需要实时的事件输入，因此事件驱动风格多用于实时交互的系统。</p>
 <h4 id="广播模型（Broadcast）"><a href="#广播模型（Broadcast）" class="headerlink" title="广播模型（Broadcast）"></a>广播模型（Broadcast）</h4><p>处理器在调度器处登记它接收的事件类型。当调度器接收到某个事件时，它会将这个事件传递给所有接收这个事件的处理器。处理器自行决定是否对事件做出反应，调度器仅仅负责传递事件。</p>
 <img src="/2022/05/26/Architecture/Broadcast.jpg" class="" title="广播模型"> 
-
-
 <h4 id="操作中断模型（Interrupt-Driven-Control）"><a href="#操作中断模型（Interrupt-Driven-Control）" class="headerlink" title="操作中断模型（Interrupt-Driven Control）"></a>操作中断模型（Interrupt-Driven Control）</h4><p>调度器管理所有处理器。调度器决定新输入的事件是否需要通知某个处理器，或者是否需要中断某个处理器当前运行的事件来对新事件进行处理。处理器完全听从调度器的指令。操作中断模型通常用于需要快速响应的系统，即当事件输入时，经常需要调度器立即中断某个处理器的当前任务来对新的输入进行处理。</p>
 <img src="/2022/05/26/Architecture/Interrupt.jpg" class="" title="操作中断模型"> 
-
-
 <h3 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>低耦合（low coupling）：处理器之间相互独立，只和调度器连接。处理器相互之间不影响，方便修改和维护。</li>
 <li>可扩展（extendibility）：只需要调整调度器即可方便的添加或删除处理器。</li>
@@ -318,8 +306,6 @@
 </ul>
 <h2 id="对等风格（Peer-to-Peer-Style）"><a href="#对等风格（Peer-to-Peer-Style）" class="headerlink" title="对等风格（Peer-to-Peer Style）"></a>对等风格（Peer-to-Peer Style）</h2><p>一个对等风格的系统中包含多个平等的节点（node），每个节点拥有独立的数据存储和功能，可以单独存在，节点与节点几乎没有相互依赖。不同节点之间依靠网络数据传输进行交互。对等风格是一种去中心化（decentralization）的分布式架构，节点相互交互而非统一和某个中心节点交互。</p>
 <img src="/2022/05/26/Architecture/PeerToPeer.jpg" class="" title="对等风格"> 
-
-
 <h3 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>有非常强的并行处理（parallel processing）能力，可以灵活的使用不同节点处理不同事物。</li>
 <li>可以动态联通多个节点，因而不需要大规模投资某个节点的性能。</li>
@@ -332,7 +318,6 @@
 </ul>
 <h2 id="微服务架构（Microservice-Architecture）"><a href="#微服务架构（Microservice-Architecture）" class="headerlink" title="微服务架构（Microservice Architecture）"></a>微服务架构（Microservice Architecture）</h2><p>微服务架构将一个大的服务（如一个网上商城的后台管理系统）中的功能拆成多个微服务（如账号管理、商品管理、订单管理）。每个微服务拥有自己的逻辑及数据存储，并且可以独立部署。服务和服务之间通过接口和网络进行通信。</p>
 <img src="/2022/05/26/Architecture/Microservice.jpg" class="" title="微服务架构"> 
-
 <h3 id="优点-7"><a href="#优点-7" class="headerlink" title="优点"></a>优点</h3><ul>
 <li>模块化（modular）：程序被拆解成可管理的服务模块，方便单独的进行开发、部署、管理和维护。</li>
 <li>可以方便的单独对某一模块进行升级、重构，便于分工管理。</li>

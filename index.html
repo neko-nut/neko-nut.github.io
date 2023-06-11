@@ -159,81 +159,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/06/04/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2023/06/04/hello-world/" class="archive-article-date">
-  	<time datetime="2023-06-04T15:38:13.348Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2023/06/04/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-HikingIrelandWest" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -329,7 +254,28 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="矩阵与向量"><a href="#矩阵与向量" class="headerlink" title="矩阵与向量"></a>矩阵与向量</h3><p>在图形学中，我们使用矩阵来进行一系列坐标处理，包括物体的平移、旋转、缩放，以及物体从三维空间到二维平面的转化。这些处理的数学基础是矩阵和向量的乘法。这里可以把 $n$ 维的列向量看作 $n$ 行一列的矩阵，使用矩阵乘法的逻辑和同样是 $n$ 行的矩阵相乘。这样可以得到一个新的 $n$ 行一列矩阵，即一个新的 $n$ 维的列向量（如公式 1.1 所示）。由此我们可以使用矩阵将一个向量转变成另一个向量。在坐标变换处理中，我们可以将点的坐标表示为列向量，并用矩阵进行坐标变换。这里我们使用右手坐标系，即 x 向左，y 向上，z 向外。</p>
-<h1 id="begin-bmatrix-a-1-amp-a-2-amp-a-3-amp-a-4-b-1-amp-b-2-amp-b-3-amp-b-4-c-1-amp-c-2-amp-c-3-amp-c-4-d-1-amp-d-2-amp-d-3-amp-d-4-end-bmatrix-begin-bmatrix-x-y-z-w-end-bmatrix"><a href="#begin-bmatrix-a-1-amp-a-2-amp-a-3-amp-a-4-b-1-amp-b-2-amp-b-3-amp-b-4-c-1-amp-c-2-amp-c-3-amp-c-4-d-1-amp-d-2-amp-d-3-amp-d-4-end-bmatrix-begin-bmatrix-x-y-z-w-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}   a_1 &amp; a_2 &amp; a_3 &amp; a_4 \   b_1 &amp; b_2 &amp; b_3 &amp; b_4 \   c_1 &amp; c_2 &amp; c_3 &amp; c_4 \   d_1 &amp; d_2 &amp; d_3 &amp; d_4\end{bmatrix}*\begin{bmatrix}   x \   y \   z \   w\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>   a_1 &amp; a_2 &amp; a_3 &amp; a_4 \<br>   b_1 &amp; b_2 &amp; b_3 &amp; b_4 \<br>   c_1 &amp; c_2 &amp; c_3 &amp; c_4 \<br>   d_1 &amp; d_2 &amp; d_3 &amp; d_4<br>\end{bmatrix}<br>*<br>\begin{bmatrix}<br>   x \<br>   y \<br>   z \<br>   w<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>    x’ &#x3D; a_1<em>x + a_2 * y + a_3 * z + a_4 * w \<br>    y’ &#x3D; b_1</em>x + b_2 * y + b_3 * z + b_4 * w \<br>    z’ &#x3D; c_1<em>x + c_2 * y + c_3 * z + c_4 * w \<br>    w’ &#x3D; d_1</em>x + d_2 * y + d_3 * z + d_4 * w<br>\end{bmatrix}<br>\tag{1.1}<br>$$</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+   a_1 & a_2 & a_3 & a_4 \\
+   b_1 & b_2 & b_3 & b_4 \\
+   c_1 & c_2 & c_3 & c_4 \\
+   d_1 & d_2 & d_3 & d_4
+\end{bmatrix}
+*
+\begin{bmatrix}
+   x \\
+   y \\
+   z \\
+   w
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    x' = a_1*x + a_2 * y + a_3 * z + a_4 * w \\
+    y' = b_1*x + b_2 * y + b_3 * z + b_4 * w \\
+    z' = c_1*x + c_2 * y + c_3 * z + c_4 * w \\
+    w' = d_1*x + d_2 * y + d_3 * z + d_4 * w
+\end{bmatrix}
+\tag{1.1}</script>
         
       
 
@@ -482,7 +428,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="设计风格和设计模式"><a href="#设计风格和设计模式" class="headerlink" title="设计风格和设计模式"></a>设计风格和设计模式</h2><p>设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格&#x2F;模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。</p>
+        <h2 id="设计风格和设计模式"><a href="#设计风格和设计模式" class="headerlink" title="设计风格和设计模式"></a>设计风格和设计模式</h2><p>设计风格和设计模式这两个概念对于初学者（本菜鸡）而言还是比较容易混淆的，尤其是中文里两个词语并没有很明确的体现出他们的区别。这两者的共同点在于，它们都是为软件的设计提供一种可以复用的模板，且在同一项目中可以搭配使用不同的风格/模式。而这两者的区别在于，设计风格是较为宏观的架构设计，而设计模式则更偏向于代码设计。</p>
 <ul>
 <li>设计风格（style）：较为宏观的设计，一般对应软件架构层面，一般会有对应架构图。</li>
 <li>设计模式（pattern）：如 23 种设计模式，一般对应代码层面，一般会有对应样例代码。</li>
@@ -562,7 +508,6 @@
       
         <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>一个字符串里有单词、数字、标点等各种内容，而我只需要获得其中的单词部分。为了方便，我直接用 Python 的 <code>re</code> 包里的 <code>split</code>，将非字母部分作为分隔符来去除非字母部分。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc = <span class="string">&quot;aaa bbb 11&quot;</span></span><br><span class="line">words = re.split(<span class="string">&#x27;[^a-z]&#x27;</span>, <span class="built_in">str</span>(doc))</span><br></pre></td></tr></table></figure>
-
 <p>但是这样出现了一个问题，由于这里空格和 1 都不属于 <code>a-z</code>，因此空格和每一个 1 都会分别作为分割符。这样会导致分割出很多的空字符串。比如此时得到的 <code>words</code> 包含五个元素 <code>[&#39;aaa&#39;, &#39;bbb&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</code>。但事实上我只需要字母部分，因此需要把后面的空元素从 <code>list</code> 中除去。</p>
         
       
@@ -711,7 +656,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这是一个最最最基础的在 Android 开发中使用本地 SQLite 的介绍，仅仅包括最基本的连接和增删改查（就够基本用&#x3D; &#x3D;）。其实Android 官方推荐使用更有效率的 <a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/room">Room数据库</a> 来存储数据，不过 SQLite 更为常用。在学习的时候发现网上的中文教程实在是比较。。。一言难尽，而我又需要讲的比较仔细，因此就决定自己写一份，就给我这样的新（cai）手（ji）做个参考叭。</p>
+        <p>这是一个最最最基础的在 Android 开发中使用本地 SQLite 的介绍，仅仅包括最基本的连接和增删改查（就够基本用= =）。其实Android 官方推荐使用更有效率的 <a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/room">Room数据库</a> 来存储数据，不过 SQLite 更为常用。在学习的时候发现网上的中文教程实在是比较。。。一言难尽，而我又需要讲的比较仔细，因此就决定自己写一份，就给我这样的新（cai）手（ji）做个参考叭。</p>
         
       
 
@@ -789,7 +734,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="关于-Bellman-Ford-算法"><a href="#关于-Bellman-Ford-算法" class="headerlink" title="关于 Bellman-Ford 算法"></a>关于 Bellman-Ford 算法</h2><p>Bellman-Ford 算法是解决单起点最短路径问题的一种算法，由 Lester Ford 发表于1956年，Richard Bellman 发表于1958年。他和 Dijkstra 算法比较相似，都以松弛为基础。然而，Dijkstra 算法每次仅对收录点的出边的终点进行松弛，无法处理路径中的负边对已收录点的连锁影响（知乎上有详细解释 (&#x3D; . &#x3D;)，这里就不细说了）。Bellman-Ford 算法牺牲了一定的时间复杂度，实现了对负边最短路径的处理。</p>
+        <h2 id="关于-Bellman-Ford-算法"><a href="#关于-Bellman-Ford-算法" class="headerlink" title="关于 Bellman-Ford 算法"></a>关于 Bellman-Ford 算法</h2><p>Bellman-Ford 算法是解决单起点最短路径问题的一种算法，由 Lester Ford 发表于1956年，Richard Bellman 发表于1958年。他和 Dijkstra 算法比较相似，都以松弛为基础。然而，Dijkstra 算法每次仅对收录点的出边的终点进行松弛，无法处理路径中的负边对已收录点的连锁影响（知乎上有详细解释 (= . =)，这里就不细说了）。Bellman-Ford 算法牺牲了一定的时间复杂度，实现了对负边最短路径的处理。</p>
         
       
 
