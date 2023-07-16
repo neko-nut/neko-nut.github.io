@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nekonut.github.io">
-  <title>Android 保存小技巧 | 黑猫の坚果</title>
+  <title>unreal5 后处理组件不完全使用守则 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的">
+  <meta name="description" content="背景这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 保存小技巧">
-<meta property="og:url" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:title" content="unreal5 后处理组件不完全使用守则">
+<meta property="og:url" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
-<meta property="og:description" content="背景在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的">
+<meta property="og:description" content="背景这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在">
 <meta property="og:locale">
-<meta property="og:image" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
-<meta property="article:published_time" content="2020-02-25T07:23:13.000Z">
-<meta property="article:modified_time" content="2022-06-15T12:58:10.692Z">
+<meta property="og:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/box.png">
+<meta property="og:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/ppsettings.png">
+<meta property="og:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/Material.png">
+<meta property="article:published_time" content="2023-07-16T15:20:05.000Z">
+<meta property="article:modified_time" content="2023-07-16T15:20:05.812Z">
 <meta property="article:author" content="黑猫">
-<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Unreal">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
+<meta name="twitter:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/box.png">
   
     <link rel="alternative" href="/atom.xml" title="黑猫の坚果" type="application/atom+xml">
   
@@ -161,37 +163,45 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Android保存小技巧" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-postprocessinunreal" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android 保存小技巧
+      unreal5 后处理组件不完全使用守则
     </h1>
   
 
         
-        <a href="/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
-  	<time datetime="2020-02-25T07:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-25</time>
+        <a href="/2023/07/16/postprocessinunreal/" class="archive-article-date">
+  	<time datetime="2023-07-16T15:20:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的类，转成 String，再存储在 sharedPreferences 中。</p>
-<span id="more"></span>
-<h2 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h2><p>首先要导入 Gson 的依赖包。从左上角 File 进入 Project structure，点击 + 加入依赖：</p>
-<img src="/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG" class="" title="加入依赖"> 
-<h2 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h2><p>将特定的类存储在 sharedPreferences 中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一个叫 game 的 sharedPreferences</span></span><br><span class="line"><span class="type">SharedPreferences</span> <span class="variable">sharedPreferences</span> <span class="operator">=</span> getSharedPreferences(<span class="string">&quot;game&quot;</span>, Activity.MODE_PRIVATE);</span><br><span class="line">SharedPreferences.<span class="type">Editor</span> <span class="variable">editor</span> <span class="operator">=</span> sharedPreferences.edit();</span><br><span class="line"><span class="comment">// 通过 Gson 将 Game 类转为 json 格式的 String</span></span><br><span class="line"><span class="type">Gson</span> <span class="variable">gson</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Gson</span>();</span><br><span class="line"><span class="type">String</span> <span class="variable">g</span> <span class="operator">=</span>  gson.toJson(game);</span><br><span class="line"><span class="comment">// 将获得的 String 存入 sharedPreferences</span></span><br><span class="line">editor.putString(<span class="string">&quot;game&quot;</span>, g);</span><br><span class="line">editor.apply();</span><br></pre></td></tr></table></figure>
-<p>从 sharePerferences 中取出需要的类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得那个叫 game 的 sharedPreferences</span></span><br><span class="line"><span class="type">SharedPreferences</span> <span class="variable">sharedPreferences</span> <span class="operator">=</span> getSharedPreferences(<span class="string">&quot;game&quot;</span>, Activity.MODE_PRIVATE);</span><br><span class="line"><span class="comment">// 将 String 从 sharedPreferences 里取出并重新解析成 Game 类</span></span><br><span class="line"><span class="type">String</span> <span class="variable">g</span> <span class="operator">=</span> sharedPreferences.getString(<span class="string">&quot;game&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line"><span class="type">Game</span> <span class="variable">game</span> <span class="operator">=</span> gson.fromJson(g, Game.class);</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li>Android developer: <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/content/SharedPreferences">sharedPreferences</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5aad29f8518825558453c6c9">Android Gson使用详解</a></li>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在这里。我们当前使用的 UE 版本是 5.0.3，因此本文仅依据后处理在 5.0.3 中的表现。</p>
+<h2 id="关于后处理"><a href="#关于后处理" class="headerlink" title="关于后处理"></a>关于后处理</h2><p>后处理，其实可以称为渲染后处理，是在 3D 场景已经渲染完成以后再对成果进行处理，从而实现一些场景整体的效果。在较为底层的 OpenGL 实现中，后处理可以通过将渲染结果存为 2D 贴图存入 frame buffer，再使用各种图像处理算法在 shader （着色器）中对该贴图进行处理。在 unreal 中，后处理可以通过后处理体积（volume）或在蓝图中添加后处理组件实现。它们是 unreal 提供的用于实现后处理的特殊类型的组件，包含了很多常用的后处理相关的参数，并且可以添加后处理材质。</p>
+<h2 id="全局和局部"><a href="#全局和局部" class="headerlink" title="全局和局部"></a>全局和局部</h2><p>unreal 提供了 unbound/infinite Extent 参数来开启全局后处理。当 unbound 设置为 true 时，相机在场景中的任何位置后处理都会起作用，否则就只能在限定的范围内起作用。当相机处于限定的范围内时，后处理效果就会作用在该相机返回的画面上（注意后处理永远是针对整个场景的，范围只用于确定生效与否）。此外，经过实测发现，unbound 并非完全无界，当镜头足够远（大约1:1拉到可以看到整个地球的范围）时，后处理效果依然会消失（个人推测是 Unreal 定义的 world 或者 Level 的最大范围）。</p>
+<p>后处理 volume 本身带有碰撞盒（BrushComponent），因此当后处理非全局时，碰撞盒的范围就是后处理作用的范围。然而后处理组件本身不带碰撞盒！！！（我查了好久才发现= _ =）。这里非 unbound 使用的边界是继承自件父节点的边界，因此如果需要有界的后处理组件，需要将后处理组件放在一个有碰撞盒的 actor 内部，或者在组件外套一个碰撞盒，如 Box Collision，如下图所示。</p>
+<img src="/2023/07/16/postprocessinunreal/box.png" class="" title="碰撞盒"> 
+<h2 id="效果修改"><a href="#效果修改" class="headerlink" title="效果修改"></a>效果修改</h2><p>后处理 volume 或组件本身带有上千个用于调整效果的参数，绝大部分都没有提供单独的 get 和 set 函数。且整个 settings 是一个无法 break 的 structure。因此当我们需要修改参数时，需要获取 postprcess component 的 PostProcessSettings 参数（类型是一个structure），调用 Set Members in PostPorcessSettings 节点，再在 details 面板上勾选需要暴露出的参数，如下图所示。C++ 也是类似的操作，我们可以获取 postprcess component 的 Settings，将需要改的参数设置为可更改再修改数值即可。代码可参考 <code>component-&gt;Settings.bOverride_WhiteTemp = true; component-&gt;Settings.WhiteTemp = 15000;</code>。注意获取 Settings 的操作会返回 Settings 的拷贝，所以如果将它赋值再修改的话需要将修改后的 settings 重新赋给组件的 settings。</p>
+<img src="/2023/07/16/postprocessinunreal/ppsettings.png" class="" title="settings"> 
+<h2 id="覆盖和冲突"><a href="#覆盖和冲突" class="headerlink" title="覆盖和冲突"></a>覆盖和冲突</h2><p>当一个区域被多个后处理组件或 volume 包含时，后处理提供了 bland weight（混合权重） 参数和 priority（优先级）参数来管理被多个后处理影响的区域的效果。priority（优先级）参数是用来控制多个后处理的优先级的，优先级高的后处理效果会叠加在优先级低的效果之上，而 bland weight 则是当前后处理的展示权重。对于每叠加一个优先级更高的后处理，效果参数值 $ x = x_原 + \Delta x <em> w $ 。假设我们当前所处的位置被两个后处理所影响，优先级较高的后处理 Temp（白平衡）为 10000，bland weight 为 0.3，优先级较低的后处理 Temp 为 3000，bland weight 为 0.6。场景默认白平衡为 6500。最终所展现效果 Temp 值为  $ (10000 - (6500 + (3000 - 6500) </em> 0.6)) <em> 0.3 + (6500 + (3000 - 6500) </em> 0.6) $。</p>
+<p>此外 unreal 还提供了 blend radius 融合半径参数，在有界后处理的边界外加一个指定半径的渐变，从原来的效果渐变为后处理的效果。半径的数值单位和 UE 的数值单位相同。</p>
+<p>不过需要注意的是， UE 5.0 当前有一个 bug，当我们试图在蓝图或者C++中动态修改 priority 的数值时，无论在运行时还是编辑器模式下，场景都是不会自动刷新的。即，如果使用 “set priority” 节点或直接在C++中改变 Priority 的值，将一个后处理组件的优先级从比另一个组件的优先级低变为比另一个组件的优先级高，虽然在细节面板里 priority 的值已经修改了，但场景却不会刷新。只有当我们再修改一个会影响场景效果的值，如修改 settings 或者其中一个后处理的 visible，场景才会刷新，优先级效果也会起作用。</p>
+<h2 id="后处理材质"><a href="#后处理材质" class="headerlink" title="后处理材质"></a>后处理材质</h2><p>后处理材质可以支持更多自定义的后处理效果的实现，可以根据需要获取场景的各个数值（如 world position）进行计算和编码。创建后处理材质需要在材质设置的地方将 material domain 设置成 PostPorcess。这样可以看到 material attribut 只有 emission color（自发光）一个出口，这个出口就是屏幕最终展现的效果。注意由于效果是叠加的自发光，输入颜色较深时效果会偏暗，如果传入黑色则就完全没有效果了。</p>
+<p>后处理材质是 Unreal 的一种可混合物，虽然可混合物当前基本只用在后处理材质上，但其有一个完整的概念体系，所以这里就不展开了。唯一需要注意的是，后处理材质在 settings 里的存储方式是 WeightedBlendables，因此当我们需要将材质和它的权重转为 WeightedBlendable 存到数组里，再将数组合成成 WeightedBlendables。具体实现方案可以参考下图。</p>
+<img src="/2023/07/16/postprocessinunreal/Material.png" class="" title="Material"> 
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/zh-CN/post-process-effects-in-unreal-engine/">https://docs.unrealengine.com/5.0/zh-CN/post-process-effects-in-unreal-engine/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.1/zh-CN/post-process-materials-in-unreal-engine/">https://docs.unrealengine.com/5.1/zh-CN/post-process-materials-in-unreal-engine/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UPostProcessComponent/">https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UPostProcessComponent/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/zh-CN/blendables-in-unreal-engine/">https://docs.unrealengine.com/5.0/zh-CN/blendables-in-unreal-engine/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/en-US/content-examples-sample-project-for-unreal-engine/">https://docs.unrealengine.com/5.0/en-US/content-examples-sample-project-for-unreal-engine/</a></li>
 </ol>
 
       
@@ -206,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Unreal</a>
         		</li>
       		
 		</ul>
@@ -225,18 +235,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/12/Pythonlist%E5%8E%BB%E9%99%A4%E7%A9%BA%E5%86%85%E5%AE%B9/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          去除 Python 的 list 中的空内容
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/02/11/Android-SQLite/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android &amp; SQLite 简易入门</div>
+    <a href="/2022/11/02/HikingIrelandWest/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">爱尔兰西海岸溜达记</div>
       <i class="icon-circle-right"></i>
     </a>
   
