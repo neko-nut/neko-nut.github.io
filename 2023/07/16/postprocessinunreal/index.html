@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/ppsettings.png">
 <meta property="og:image" content="http://nekonut.github.io/2023/07/16/postprocessinunreal/Material.png">
 <meta property="article:published_time" content="2023-07-16T15:20:05.000Z">
-<meta property="article:modified_time" content="2023-07-16T15:20:05.812Z">
+<meta property="article:modified_time" content="2023-07-16T15:21:52.727Z">
 <meta property="article:author" content="黑猫">
 <meta property="article:tag" content="Unreal">
 <meta name="twitter:card" content="summary">
@@ -185,6 +185,7 @@
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在这里。我们当前使用的 UE 版本是 5.0.3，因此本文仅依据后处理在 5.0.3 中的表现。</p>
 <h2 id="关于后处理"><a href="#关于后处理" class="headerlink" title="关于后处理"></a>关于后处理</h2><p>后处理，其实可以称为渲染后处理，是在 3D 场景已经渲染完成以后再对成果进行处理，从而实现一些场景整体的效果。在较为底层的 OpenGL 实现中，后处理可以通过将渲染结果存为 2D 贴图存入 frame buffer，再使用各种图像处理算法在 shader （着色器）中对该贴图进行处理。在 unreal 中，后处理可以通过后处理体积（volume）或在蓝图中添加后处理组件实现。它们是 unreal 提供的用于实现后处理的特殊类型的组件，包含了很多常用的后处理相关的参数，并且可以添加后处理材质。</p>
+<span id="more"></span>
 <h2 id="全局和局部"><a href="#全局和局部" class="headerlink" title="全局和局部"></a>全局和局部</h2><p>unreal 提供了 unbound/infinite Extent 参数来开启全局后处理。当 unbound 设置为 true 时，相机在场景中的任何位置后处理都会起作用，否则就只能在限定的范围内起作用。当相机处于限定的范围内时，后处理效果就会作用在该相机返回的画面上（注意后处理永远是针对整个场景的，范围只用于确定生效与否）。此外，经过实测发现，unbound 并非完全无界，当镜头足够远（大约1:1拉到可以看到整个地球的范围）时，后处理效果依然会消失（个人推测是 Unreal 定义的 world 或者 Level 的最大范围）。</p>
 <p>后处理 volume 本身带有碰撞盒（BrushComponent），因此当后处理非全局时，碰撞盒的范围就是后处理作用的范围。然而后处理组件本身不带碰撞盒！！！（我查了好久才发现= _ =）。这里非 unbound 使用的边界是继承自件父节点的边界，因此如果需要有界的后处理组件，需要将后处理组件放在一个有碰撞盒的 actor 内部，或者在组件外套一个碰撞盒，如 Box Collision，如下图所示。</p>
 <img src="/2023/07/16/postprocessinunreal/box.png" class="" title="碰撞盒"> 
