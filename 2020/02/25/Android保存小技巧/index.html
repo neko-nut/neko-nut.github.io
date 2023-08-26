@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://nekonut.github.io">
+  <link rel="dns-prefetch" href="http://neko-nut.github.io">
   <title>Android 保存小技巧 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="背景在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 保存小技巧">
-<meta property="og:url" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:url" content="http://neko-nut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
 <meta property="og:description" content="背景在 Android 小型游戏开发中，如果想要暂时保存游戏，使用数据库比较繁琐也没有必要。比如有一个类来存储游戏当前状态，包括了人物位置，血量，分数，当前游戏状态等等。如果使用数据库存储，只需要一张表但是有十几列，非常麻烦。而 sharedPreferences 只能保存 String，将每个信息单独转换成 String 存储也非常麻烦。这时，可以使用 Gson 将需要的内容，比如存储当前信息的">
 <meta property="og:locale">
-<meta property="og:image" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
+<meta property="og:image" content="http://neko-nut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
 <meta property="article:published_time" content="2020-02-25T07:23:13.000Z">
 <meta property="article:modified_time" content="2022-06-15T12:58:10.692Z">
 <meta property="article:author" content="黑猫">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://nekonut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
+<meta name="twitter:image" content="http://neko-nut.github.io/2020/02/25/Android%E4%BF%9D%E5%AD%98%E5%B0%8F%E6%8A%80%E5%B7%A7/gson.PNG">
   
     <link rel="alternative" href="/atom.xml" title="黑猫の坚果" type="application/atom+xml">
   
