@@ -159,6 +159,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ChaosDestruction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/09/26/ChaosDestruction/">Unreal Chaos 破碎体的一些动态添加和修改</a>
+    </h1>
+  
+
+        
+        <a href="/2023/09/26/ChaosDestruction/" class="archive-article-date">
+  	<time datetime="2023-09-26T13:02:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近要做爆破仿真，所以开始带薪学习 Chaos 破碎系统（欸嘿）。总体而言感觉目前 Chaos 还是一个不怎么完善的系统，很多功能都很难以使用，尤其是如果想在运行状态下对一些参数进行动态修改。感觉每次尝试都心惊肉跳，生怕它出现什么理论上不该出现的现象。</p>
+<p>我们的需求是希望爆破体可以动态添加，完成一次爆破以后，在不重置整个场景的基础上重置这个破碎体，需要的时候可以进行再次爆破。但在 5.0 中并没有破碎体重置的函数，也没找到各种动态设置的能力，因此也只能看看源码中是否有相关解法了。不过总体而已跌跌撞撞还是大概搞明白了一些东西，也是我第一次必须从 UE 源码中找问题的答案。这个解法未必是最合适甚至未必是完全正确的，只是目前测试下来可以使用的一种解法。总之就是如果后续有碰到这种需求，也可以给做个参考叭。</p>
+<p>关于怎么创建破碎体、怎么爆破等等，网上已经有非常非常非常多的教程了，所以这里不再赘述。总之就是基于 Static Mesh 创建 GeometryCollision，将 GeometryCollision 放置在场景中，再使用 master field 爆破。当所有东西都预制在场景里时，整个流程十分顺滑，但当我们希望所有东西都动态添加时，就不是那么回事了。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Unreal</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2023/09/26/ChaosDestruction/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-postprocessinunreal" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -863,83 +939,10 @@
 
 
   
-    <article id="post-博客建立撒花！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/19/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E6%92%92%E8%8A%B1%EF%BC%81/">博客上线撒花！</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/19/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E6%92%92%E8%8A%B1%EF%BC%81/" class="archive-article-date">
-  	<time datetime="2019-04-19T12:37:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="咕了好久的博客终于上线啦！！！"><a href="#咕了好久的博客终于上线啦！！！" class="headerlink" title="咕了好久的博客终于上线啦！！！"></a>咕了好久的博客终于上线啦！！！</h4><p>虽然是在大佬的帮助下才建立起来的 orz</p>
-<p>感觉还有好多好多要学习的……全新的hexo，依然不太熟悉的git，还有算法数据库操作系统等等等等。和大佬近距离接触总是让人瑟瑟发抖，很多东西根本还是在我的知识体系之外，连摸到边都要花很久时间。</p>
-<p>但还是希望用博客记录下成长的一点一滴，分享新学到的东西，也希望终有一天这个博客可以产出自己的教程，能给和现在的我一样的新手小白一些帮助。</p>
-<p>让博客和我一起成长叭。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">生活</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/19/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E6%92%92%E8%8A%B1%EF%BC%81/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 

@@ -6,24 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://neko-nut.github.io">
-  <title>unreal5 后处理组件不完全使用守则 | 黑猫の坚果</title>
+  <title>Unreal Chaos 破碎体的一些动态添加和修改 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在">
+  <meta name="description" content="背景最近要做爆破仿真，所以开始带薪学习 Chaos 破碎系统（欸嘿）。总体而言感觉目前 Chaos 还是一个不怎么完善的系统，很多功能都很难以使用，尤其是如果想在运行状态下对一些参数进行动态修改。感觉每次尝试都心惊肉跳，生怕它出现什么理论上不该出现的现象。 我们的需求是希望爆破体可以动态添加，完成一次爆破以后，在不重置整个场景的基础上重置这个破碎体，需要的时候可以进行再次爆破。但在 5.0 中并没">
 <meta property="og:type" content="article">
-<meta property="og:title" content="unreal5 后处理组件不完全使用守则">
-<meta property="og:url" content="http://neko-nut.github.io/2023/07/16/postprocessinunreal/index.html">
+<meta property="og:title" content="Unreal Chaos 破碎体的一些动态添加和修改">
+<meta property="og:url" content="http://neko-nut.github.io/2023/09/26/ChaosDestruction/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
-<meta property="og:description" content="背景这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在">
+<meta property="og:description" content="背景最近要做爆破仿真，所以开始带薪学习 Chaos 破碎系统（欸嘿）。总体而言感觉目前 Chaos 还是一个不怎么完善的系统，很多功能都很难以使用，尤其是如果想在运行状态下对一些参数进行动态修改。感觉每次尝试都心惊肉跳，生怕它出现什么理论上不该出现的现象。 我们的需求是希望爆破体可以动态添加，完成一次爆破以后，在不重置整个场景的基础上重置这个破碎体，需要的时候可以进行再次爆破。但在 5.0 中并没">
 <meta property="og:locale">
-<meta property="og:image" content="http://neko-nut.github.io/2023/07/16/postprocessinunreal/box.png">
-<meta property="og:image" content="http://neko-nut.github.io/2023/07/16/postprocessinunreal/ppsettings.png">
-<meta property="og:image" content="http://neko-nut.github.io/2023/07/16/postprocessinunreal/Material.png">
-<meta property="article:published_time" content="2023-07-16T15:20:05.000Z">
-<meta property="article:modified_time" content="2023-07-16T15:21:52.727Z">
+<meta property="og:image" content="http://neko-nut.github.io/2023/09/26/ChaosDestruction/RestCollection.png">
+<meta property="article:published_time" content="2023-09-26T13:02:53.000Z">
+<meta property="article:modified_time" content="2023-09-26T13:02:53.959Z">
 <meta property="article:author" content="黑猫">
 <meta property="article:tag" content="Unreal">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://neko-nut.github.io/2023/07/16/postprocessinunreal/box.png">
+<meta name="twitter:image" content="http://neko-nut.github.io/2023/09/26/ChaosDestruction/RestCollection.png">
   
     <link rel="alternative" href="/atom.xml" title="黑猫の坚果" type="application/atom+xml">
   
@@ -163,47 +161,40 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-postprocessinunreal" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-ChaosDestruction" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      unreal5 后处理组件不完全使用守则
+      Unreal Chaos 破碎体的一些动态添加和修改
     </h1>
   
 
         
-        <a href="/2023/07/16/postprocessinunreal/" class="archive-article-date">
-  	<time datetime="2023-07-16T15:20:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-16</time>
+        <a href="/2023/09/26/ChaosDestruction/" class="archive-article-date">
+  	<time datetime="2023-09-26T13:02:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这段时间大量接触了unreal 5 的后处理相关内容，踩了不少奇奇怪怪的坑，且 unreal 的文档也非常混乱，很多地方不测试根本没法知道实现效果是怎么样的，因此就开贴记录留念一下。由于项目相关的原因，我们不能在大世界手动添加后处理volume，只能使用蓝图的后处理组件进行相关开发，因此此处主要讨论后处理组件相关内容。同时我也并不负责美术工作，因此那些具体效果的实现、相关参数和材质也并不包含在这里。我们当前使用的 UE 版本是 5.0.3，因此本文仅依据后处理在 5.0.3 中的表现。</p>
-<h2 id="关于后处理"><a href="#关于后处理" class="headerlink" title="关于后处理"></a>关于后处理</h2><p>后处理，其实可以称为渲染后处理，是在 3D 场景已经渲染完成以后再对成果进行处理，从而实现一些场景整体的效果。在较为底层的 OpenGL 实现中，后处理可以通过将渲染结果存为 2D 贴图存入 frame buffer，再使用各种图像处理算法在 shader （着色器）中对该贴图进行处理。在 unreal 中，后处理可以通过后处理体积（volume）或在蓝图中添加后处理组件实现。它们是 unreal 提供的用于实现后处理的特殊类型的组件，包含了很多常用的后处理相关的参数，并且可以添加后处理材质。</p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近要做爆破仿真，所以开始带薪学习 Chaos 破碎系统（欸嘿）。总体而言感觉目前 Chaos 还是一个不怎么完善的系统，很多功能都很难以使用，尤其是如果想在运行状态下对一些参数进行动态修改。感觉每次尝试都心惊肉跳，生怕它出现什么理论上不该出现的现象。</p>
+<p>我们的需求是希望爆破体可以动态添加，完成一次爆破以后，在不重置整个场景的基础上重置这个破碎体，需要的时候可以进行再次爆破。但在 5.0 中并没有破碎体重置的函数，也没找到各种动态设置的能力，因此也只能看看源码中是否有相关解法了。不过总体而已跌跌撞撞还是大概搞明白了一些东西，也是我第一次必须从 UE 源码中找问题的答案。这个解法未必是最合适甚至未必是完全正确的，只是目前测试下来可以使用的一种解法。总之就是如果后续有碰到这种需求，也可以给做个参考叭。</p>
+<p>关于怎么创建破碎体、怎么爆破等等，网上已经有非常非常非常多的教程了，所以这里不再赘述。总之就是基于 Static Mesh 创建 GeometryCollision，将 GeometryCollision 放置在场景中，再使用 master field 爆破。当所有东西都预制在场景里时，整个流程十分顺滑，但当我们希望所有东西都动态添加时，就不是那么回事了。</p>
 <span id="more"></span>
-<h2 id="全局和局部"><a href="#全局和局部" class="headerlink" title="全局和局部"></a>全局和局部</h2><p>unreal 提供了 unbound/infinite Extent 参数来开启全局后处理。当 unbound 设置为 true 时，相机在场景中的任何位置后处理都会起作用，否则就只能在限定的范围内起作用。当相机处于限定的范围内时，后处理效果就会作用在该相机返回的画面上（注意后处理永远是针对整个场景的，范围只用于确定生效与否）。此外，经过实测发现，unbound 并非完全无界，当镜头足够远（大约1:1拉到可以看到整个地球的范围）时，后处理效果依然会消失（个人推测是 Unreal 定义的 world 或者 Level 的最大范围）。</p>
-<p>后处理 volume 本身带有碰撞盒（BrushComponent），因此当后处理非全局时，碰撞盒的范围就是后处理作用的范围。然而后处理组件本身不带碰撞盒！！！（我查了好久才发现= _ =）。这里非 unbound 使用的边界是继承自件父节点的边界，因此如果需要有界的后处理组件，需要将后处理组件放在一个有碰撞盒的 actor 内部，或者在组件外套一个碰撞盒，如 Box Collision，如下图所示。</p>
-<img src="/2023/07/16/postprocessinunreal/box.png" class="" title="碰撞盒"> 
-<h2 id="效果修改"><a href="#效果修改" class="headerlink" title="效果修改"></a>效果修改</h2><p>后处理 volume 或组件本身带有上千个用于调整效果的参数，绝大部分都没有提供单独的 get 和 set 函数。且整个 settings 是一个无法 break 的 structure。因此当我们需要修改参数时，需要获取 postprcess component 的 PostProcessSettings 参数（类型是一个structure），调用 Set Members in PostPorcessSettings 节点，再在 details 面板上勾选需要暴露出的参数，如下图所示。C++ 也是类似的操作，我们可以获取 postprcess component 的 Settings，将需要改的参数设置为可更改再修改数值即可。代码可参考 <code>component-&gt;Settings.bOverride_WhiteTemp = true; component-&gt;Settings.WhiteTemp = 15000;</code>。注意获取 Settings 的操作会返回 Settings 的拷贝，所以如果将它赋值再修改的话需要将修改后的 settings 重新赋给组件的 settings。</p>
-<img src="/2023/07/16/postprocessinunreal/ppsettings.png" class="" title="settings"> 
-<h2 id="覆盖和冲突"><a href="#覆盖和冲突" class="headerlink" title="覆盖和冲突"></a>覆盖和冲突</h2><p>当一个区域被多个后处理组件或 volume 包含时，后处理提供了 bland weight（混合权重） 参数和 priority（优先级）参数来管理被多个后处理影响的区域的效果。priority（优先级）参数是用来控制多个后处理的优先级的，优先级高的后处理效果会叠加在优先级低的效果之上，而 bland weight 则是当前后处理的展示权重。对于每叠加一个优先级更高的后处理，效果参数值 $ x = x_原 + \Delta x <em> w $ 。假设我们当前所处的位置被两个后处理所影响，优先级较高的后处理 Temp（白平衡）为 10000，bland weight 为 0.3，优先级较低的后处理 Temp 为 3000，bland weight 为 0.6。场景默认白平衡为 6500。最终所展现效果 Temp 值为  $ (10000 - (6500 + (3000 - 6500) </em> 0.6)) <em> 0.3 + (6500 + (3000 - 6500) </em> 0.6) $。</p>
-<p>此外 unreal 还提供了 blend radius 融合半径参数，在有界后处理的边界外加一个指定半径的渐变，从原来的效果渐变为后处理的效果。半径的数值单位和 UE 的数值单位相同。</p>
-<p>不过需要注意的是， UE 5.0 当前有一个 bug，当我们试图在蓝图或者C++中动态修改 priority 的数值时，无论在运行时还是编辑器模式下，场景都是不会自动刷新的。即，如果使用 “set priority” 节点或直接在C++中改变 Priority 的值，将一个后处理组件的优先级从比另一个组件的优先级低变为比另一个组件的优先级高，虽然在细节面板里 priority 的值已经修改了，但场景却不会刷新。只有当我们再修改一个会影响场景效果的值，如修改 settings 或者其中一个后处理的 visible，场景才会刷新，优先级效果也会起作用。</p>
-<h2 id="后处理材质"><a href="#后处理材质" class="headerlink" title="后处理材质"></a>后处理材质</h2><p>后处理材质可以支持更多自定义的后处理效果的实现，可以根据需要获取场景的各个数值（如 world position）进行计算和编码。创建后处理材质需要在材质设置的地方将 material domain 设置成 PostPorcess。这样可以看到 material attribut 只有 emission color（自发光）一个出口，这个出口就是屏幕最终展现的效果。注意由于效果是叠加的自发光，输入颜色较深时效果会偏暗，如果传入黑色则就完全没有效果了。</p>
-<p>后处理材质是 Unreal 的一种可混合物，虽然可混合物当前基本只用在后处理材质上，但其有一个完整的概念体系，所以这里就不展开了。唯一需要注意的是，后处理材质在 settings 里的存储方式是 WeightedBlendables，因此当我们需要将材质和它的权重转为 WeightedBlendable 存到数组里，再将数组合成成 WeightedBlendables。具体实现方案可以参考下图。</p>
-<img src="/2023/07/16/postprocessinunreal/Material.png" class="" title="Material"> 
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/zh-CN/post-process-effects-in-unreal-engine/">https://docs.unrealengine.com/5.0/zh-CN/post-process-effects-in-unreal-engine/</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.1/zh-CN/post-process-materials-in-unreal-engine/">https://docs.unrealengine.com/5.1/zh-CN/post-process-materials-in-unreal-engine/</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UPostProcessComponent/">https://docs.unrealengine.com/5.0/en-US/API/Runtime/Engine/Components/UPostProcessComponent/</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/zh-CN/blendables-in-unreal-engine/">https://docs.unrealengine.com/5.0/zh-CN/blendables-in-unreal-engine/</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.0/en-US/content-examples-sample-project-for-unreal-engine/">https://docs.unrealengine.com/5.0/en-US/content-examples-sample-project-for-unreal-engine/</a></li>
-</ol>
+<h2 id="Geometry-Collection"><a href="#Geometry-Collection" class="headerlink" title="Geometry Collection"></a>Geometry Collection</h2><p>Geometry Collection 是几何体的集合，基本就可以被看做预制好的破碎体。当我们把 Geometry Collection 放入场景中时，场景中会生成一个 Geometry Collection Actor，这个 actor 内含一个 Geometry Collection Component，绝大部分破碎体的参数都是直接属于这个 Component 的。</p>
+<p>Rest Collision 是 Geometry Collection Compoenet的核心参数，它的类型就是之前创建的 Geometry Collection。设置了 Rest Collision 以后，所有的相关参数（如材质、破碎阈值等）都会自动设为该 Geometry Collection 的默认参数。</p>
+<img src="/2023/09/26/ChaosDestruction/RestCollection.png" class="" title="rest collection"> 
+<h2 id="动态添加"><a href="#动态添加" class="headerlink" title="动态添加"></a>动态添加</h2><p>所以动态添加的核心就是动态设置 RestCollision。UE 5.2 直接在蓝图中提供了 <code>SetRestCollision()</code> 方法，5.0 的 C++ 中也有相应的 public 函数，并都内置了同步更新其他相关参数的功能。但是当我们创建一个新的 Geometry Collection Actor 并直接执行了它包含的 Geometry Collection Compoenet 的这个方法以后，虽然在细节面板上可以看到 rest collision 和相关参数已经全部设置完全了，但是场景中渲染效果却没有任何变化。</p>
+<p>如果我们只需要动态创建指定破碎体，那我们只需要使用 <code>AddGeometryCollectionComponent</code> 节点在 Actor 中添加一个新的 Geometry Collection Component，并在写蓝图时在 details 里手动设置好 Rest Collection 的参数即可。但当我们有多种破碎体时，每个破碎体都需要自己的 <code>AddGeometryCollectionComponent</code> 节点，逻辑无法复用。</p>
+<p>所以如果想 runtime 动态指定破碎体的类型，除了rest collection，还有两个重要函数，<code>ResetDynamicCollection()</code> 和 <code>RecreatePhysicsState()</code>。<code>ResetDynamicCollection()</code> 是属于 GeometryCollectionComponent 的 protected 的函数，作用是重置渲染效果。执行完这个函数后，破碎体 level 0 的渲染效果已经出现了，但没有任何物理效果，也没法被力场爆破。因此我们还需要一个属于 UActorComponent 的 public 函数 <code>RecreatePhysicsState()</code> 来重置破碎体的物理效果。鉴于包括了非 public 函数，如果不想修改引擎，我们就只能建立一个继承 GeometryCollectionComponent 类的 MyGeometryCollectionComponent 类来实现这个功能。代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UCLASS</span>()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TEST_API</span> UMyGeometryCollectionComponent : <span class="keyword">public</span> UGeometryCollectionComponent</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">GENERATED_BODY</span>()</span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">UFUNCTION</span>(BlueprintCallable, Category = <span class="string">&quot;ChaosPhysics&quot;</span>)</span><br><span class="line">		<span class="function"><span class="type">void</span> <span class="title">MySetRestCollection</span><span class="params">(<span class="type">const</span> UGeometryCollection* RestCollectionIn)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">UMyGeometryCollectionComponent::MySetRestCollection</span><span class="params">(<span class="type">const</span> UGeometryCollection* RestCollectionIn)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">SetRestCollection</span>(RestCollectionIn);</span><br><span class="line">  	<span class="comment">// 重置渲染效果</span></span><br><span class="line">	<span class="built_in">ResetDynamicCollection</span>();</span><br><span class="line">	<span class="comment">// 重置物理效果</span></span><br><span class="line">	<span class="built_in">RecreatePhysicsState</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="动态修改"><a href="#动态修改" class="headerlink" title="动态修改"></a>动态修改</h2><p>虽然这个方法实现了动态添加，但只少在5.0 和 5.2 版本，爆破后或者第二次设置 rest collision 后， <code>ResetDynamicCollection()</code> 就失效了，场景效果完全没有变化。因此如果想在爆破后重新变成未爆破的情况，目前只找到了删除再添加一个办法。</p>
+<p>此外，当一个破碎体被放置在场景中并设置好相关参数后，动态修改也是漏洞百出。比如修改 GeometryCollectionActor 的 location 只会修改 level 0 的渲染效果，如果在没爆破的时候修改，虽然视觉上 location 改变了，但其实破碎块的位置和力的触发效果并没有随之改变，在新坐标上添加爆破力不会有任何反应，而在原坐标上添加爆破力则使新坐标上的 mesh 消失，原坐标上出现爆破的效果。如果已经爆破，会在目标位置出现一次闪烁，但破碎了的部分并不会变化。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体而言， Chaos 破碎系统还是一个不怎么完善的功能。当然考虑到动态设置其实并不算一个大众的需求，且破碎体本身就是一个复杂且庞大的功能，只能说 UE 尽力了.jpg。</p>
 
       
 
@@ -236,18 +227,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2023/09/26/ChaosDestruction/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Unreal Chaos 破碎体的一些动态添加和修改
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/11/02/HikingIrelandWest/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">爱尔兰西海岸溜达记</div>
+    <a href="/2023/07/16/postprocessinunreal/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">unreal5 后处理组件不完全使用守则</div>
       <i class="icon-circle-right"></i>
     </a>
   
