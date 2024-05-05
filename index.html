@@ -159,6 +159,115 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-FourierImage" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/05/FourierImage/">图形、图像与傅里叶变换</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/05/FourierImage/" class="archive-article-date">
+  	<time datetime="2024-05-05T09:28:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在图形学和计算机视觉的学习中，总是会看到大名鼎鼎傅里叶变换，但学了以后仿佛又没再用过了，搞不明白也仿佛完全不影响后续的学习，因此学了几次我都完全没明白。在最近又双叒叕学到这个名词以后，我终于决心把它一次性折腾个明白，顺便写一篇博客给以后的自己复习。当然傅里叶变换背后有一整套数学逻辑，且涉及傅里叶变换的其实都属于数字图像处理这一范畴，而这其中的复杂内容可以单独成课的。因此我这里只大略的涉及了它在图形图像方面应用的一些理论和逻辑（本来想深入研究，但是实在看不懂 QAQ 数学不是这点篇幅可以深入的）。考虑到数字信号本身就是基于数学人工生成的信号，在数学上的本质就是函数表达式，且本文的重点还是倾向于图形学，因此后文中信号、函数等名词使用可能非常混乱 = _ =。</p>
+<h2 id="数字信号：时域与频域"><a href="#数字信号：时域与频域" class="headerlink" title="数字信号：时域与频域"></a>数字信号：时域与频域</h2><p>时域（time domain）描述信号随时间如何变化。对于一维波而言，时域图的 x 轴单位为时间 t，y 轴单位为振幅 A。时域图描述了不同时间时波的状态，t = 0 时 y 的值表当前波的振幅，t = 10 的 y 值表 10 单位时间之前波的振幅。</p>
+<p>频域（frequency domain）描述的是组成信号的正弦波的振幅随频率变化。基于波的叠加原理，任何一个数字信号都可以拆解成若干个不频率不同振幅的正弦波。一维信号的频域图的 x 轴表示这些波的频率，而 y 轴则表示这个频率对应波的振幅。</p>
+<p>归根究底，时域和频域只是对信号的不同表现形式，因此一个信号理应有一个在时域上的表现形式和在一个频域上的表现形式，区别只是信号不同表现形式下方便做不同的处理。而傅里叶变换就是那个将信号在时域和频域之间相互转换的变换。</p>
+<h2 id="傅里叶"><a href="#傅里叶" class="headerlink" title="傅里叶"></a>傅里叶</h2><p>傅里叶系列理论（包括傅里叶展开、傅里叶变换等等）的基础是，函数可以用三角函数构成的无穷级数表示，即函数可以由有限或无限个不同频率、振幅的正弦函数和余弦函数以及一个常数相加得到。当然这个变换中间的细节、条件等等要展开讲是可以出书的，这里就不仔细说了。反正核心的要素就是，将函数展开成为若干不同振幅、角频率、初相的正弦函数的和。三角公式（就是初中学的那个 $sin(\alpha +_ \beta) = sin\alpha cos\beta + cos\alpha sin\beta$ ）可以将不同初相的正弦函数转化为相同振幅、角频率的正弦函数和余弦函数之和。因此常见的傅里叶级数通常表示为成对的正弦函数和余弦函数和常数之和。</p>
+<h3 id="傅里叶级数"><a href="#傅里叶级数" class="headerlink" title="傅里叶级数"></a>傅里叶级数</h3><p>级数就是序列之和，如 $s = u_1 + u_2 + … + u_n + …$。一般我们所说的级数都是无穷级数（当然也有有穷级数）。级数的收敛就是指这个级数有一个一般意义上的和，即极限值。傅里叶级数就是一种级数，它由多个正弦和余弦函数相加而成，而傅里叶展开就是把函数展开成傅里叶级数。</p>
+<h3 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h3><p>而傅里叶变换则是傅里叶的理论更为复杂的应用，其作用是将函数从时域转为频域。当然逆傅里叶变换也可以将函数从频域转为时域。本质上它其实是一个坐标系转换，将函数从时域坐标转换为频域坐标，即将函数傅里叶级数中的频率和振幅提取出来。具体的计算逻辑这里就不展开了，总体来讲涉及到了采样、欧拉公式、极限等数学知识，推荐参考[6]中[苗华栋]的答案，讲得十分清晰且易于理解（且十分数学）。</p>
+<h2 id="图像处理"><a href="#图像处理" class="headerlink" title="图像处理"></a>图像处理</h2><p>使用傅里叶变换进行图像处理，其本质就是将图片首尾相接当成空间中的二维信号（图片在空间维度上连续且循环，就像数字信号在时间维度上连续且循环），使用空间域（space domain）对应信号的时域。图片的频域图是一张灰度图，中点到图中像素点的方向是平面波的方向，距离是平面波的频率。频谱图的灰度值代表函数的振幅，即像素相对于相邻像素的差异强弱。相邻像素差异越强说明信号变化越快，即频率越大，所以频谱图上的灰度值也越大（图像颜色越黑）。通常展示的傅里叶变换后的频域图（如下图）都是移位后的结果，将最低频的信息移到原点，这样可以将不同图像的频谱图对齐，方便后续处理。最终将获得中间低频，边缘高频的灰度图。下图展现了图片经过傅里叶变换后的结果。</p>
+<img src="/2024/05/05/FourierImage/FourierImage.jpg" class="" title="图片傅里叶变换后的结果"> 
+<p>在进行傅里叶变换后，我们就可以使用不同的滤波器对图片进行不同的处理。去除低频信号的滤波（高通滤波）可以用于边缘提取，而去除高频信号的滤波（低通滤波）可以将图片模糊。在图像处理中，我们所使用的滤波器也可以用图片表示，并且滤波器也可以使用傅里叶变换获取其频谱图。在具体的计算操作中，将滤波器外围补 0 放大至图片大小，分别获取二者的频谱图，偏移再相乘（矩阵每个元素相乘），就相当于使用滤波。因为当滤波器频率为零的地方，原图像的频率乘完就会一样变为零，只有滤波器包含的频谱的值才会继续存在。将通过滤波器后的频谱图进行逆傅里叶变换，就可以得到滤波后的图像。</p>
+<h2 id="卷积定理"><a href="#卷积定理" class="headerlink" title="卷积定理"></a>卷积定理</h2><p>卷积定理的定义是，函数卷积的傅里叶变换等于函数傅里叶变换的乘积，即都是对图片做了一次滤波处理。无论是卷积的定义还是这个定理本身，都有非常复杂的数学性，因此这里只考虑其在图形学方面的相关定义和使用。在图形学中，卷积的本质就是对原始图片的每一个像素点和它周围的像素点做加权平均，所谓卷积核就是像素点的权重。比如用一个一维的卷积核 $[1, 1, 1]$ 做卷积，结果中的每个像素值等于像素点左边、像素点右边和像素点本身的像素值的平均，即 $(p<em>i = p</em>{i-1} <em> 1 + p_i </em> 1 + p_{i+1} * 1) / 3$ 。在图片处理中比较常用的是二维卷积，具体使用可以参考下图。对于边缘的点，不同使用场景有不同的处理方案，常见的有直接不考虑边缘（图片缩减两行两列）、复制边缘数值、像平铺一样补另一侧的数值等。</p>
+<img src="/2024/05/05/FourierImage/convonlution.png" class="" title="卷积"> 
+<p>将这条定理结合前文图像处理，我们可以得到，将图片和卷积核都经过傅里叶变换再相乘，相当于对图片做一次卷积。就直接的效果而言，如果一维卷积核 $[1, 1, 1]$，即一个像素新值等于其左右像素值之和，那若它和它左右像素相等则它的结果值不变，而如果它左右值相差较大，像素的结果就会等于左中右的平均值。计算后的图片边缘被左右平均后不再明显，相当于减小了图片的变化，对图片做了模糊，所以这个卷积核相当于去掉了高频信息，即是一个低通滤波。将这个滤波做傅里叶变换和图片做傅里叶变换，相乘再做逆傅里叶变换，就可以得到和卷积相同的效果。</p>
+<h2 id="一些应用"><a href="#一些应用" class="headerlink" title="一些应用"></a>一些应用</h2><h3 id="渲染效果"><a href="#渲染效果" class="headerlink" title="渲染效果"></a>渲染效果</h3><p>在实现一些渲染效果时，傅里叶变换可以快速实现原本使用卷积实现的效果，来优化渲染性能。比如做模糊效果，可以使用卷积做类似左右像素平均（或者更复杂的卷积核做更好的效果），也就可以用这个卷积核用傅里叶变换做一个滤波。同理当我们需要对边缘做一些操作（如实现边缘高亮之类的效果）时，我们也可以用傅里叶变换替代卷积的边缘提取计算。</p>
+<h3 id="图像识别"><a href="#图像识别" class="headerlink" title="图像识别"></a>图像识别</h3><p>在做图像识别的时候，傅里叶变换可以对图像进行去噪或锐化。噪声一般也是图片中的突变，如白色衣服中出现一个毫无意义的黑色像素点。大部分时候，图像的高频信息既有边缘信息，也有噪音信息。因此当我们只需要图像的色块信息时，我们就可以通过去除高频信息来去除色块中的噪点。而图像增强、锐化则是将图像的边缘加强，即加强高频信号。总之，我们可以用傅里叶变换和不同的滤波器提取图像在各个频率上的信息，以方便对不同信号做不同的处理。</p>
+<h3 id="水波纹"><a href="#水波纹" class="headerlink" title="水波纹"></a>水波纹</h3><p>水波纹是傅里叶变换的一种和图像处理无关的使用方式，就是获取海面波的频域图，再通过逆傅里叶变换获取它的时域图（其实就是波形图），通过波形图计算出法线等其他需要的信息，就可以得到水面的效果。具体计算方式这里就不展开了（当然是因为我还没机会去实现它）。当然这种计算方式非常消耗性能，只有对水面的效果要求比较高时才会使用。</p>
+<h3 id="添加水印"><a href="#添加水印" class="headerlink" title="添加水印"></a>添加水印</h3><p>添加水印是我这次查资料才看到的神奇用法。简而言之就是将水印添加在频域。若水印分布合理的话，逆傅里叶变换后其实只会稍微影响一下对比度，基本不会改变肉眼效果。具体可以参考知乎回答[12]。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/428783752">时域、频域、空间域的基本概念</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21040374">信号频域和时域的关系是怎样的？</a></li>
+<li>百度百科 - <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%82%85%E9%87%8C%E5%8F%B6%E5%B1%95%E5%BC%80%E5%BC%8F/18888419">傅里叶展开式</a></li>
+<li>维基百科 - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-sg/%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0#%E5%82%85%E7%AB%8B%E8%91%89%E7%B4%9A%E6%95%B8%E6%94%B6%E6%96%82">傅里叶级数</a></li>
+<li>维基百科 级数  <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E7%BA%A7%E6%95%B0">https://zh.wikipedia.org/zh-hans/%E7%BA%A7%E6%95%B0</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19714540">如何理解傅里叶变换公式？</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/484475975">如何理解图像的频率域处理？</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/163651606">一文读懂傅立叶变换处理图像的原理</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/99605178">通俗讲解：图像傅里叶变换</a></li>
+<li>CSDN - <a target="_blank" rel="noopener" href="https://blog.csdn.net/jacke121/article/details/108399127">傅里叶变换在图像处理的意义和应用</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95482541">【学习笔记】Unity 基于GPU FFT海洋的实现-理论篇</a></li>
+<li>知乎 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33526455">从傅立叶变换到盲水印（中）——图片盲水印实现</a></li>
+<li>bilibili - <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=3&amp;spm_id_from=pageDriver&amp;vd_source=0f1b9e43b076f0953bf1cf5297eec647">GAMES101-现代图形学入门 P6</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">图形学</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">数字图像处理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/05/FourierImage/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-water" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -866,84 +975,6 @@
 
 
   
-    <article id="post-Android-SQLite" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/11/Android-SQLite/">Android &amp; SQLite 简易入门</a>
-    </h1>
-  
-
-        
-        <a href="/2020/02/11/Android-SQLite/" class="archive-article-date">
-  	<time datetime="2020-02-11T03:06:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这是一个最最最基础的在 Android 开发中使用本地 SQLite 的介绍，仅仅包括最基本的连接和增删改查（就够基本用= =）。其实Android 官方推荐使用更有效率的 <a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/room">Room数据库</a> 来存储数据，不过 SQLite 更为常用。在学习的时候发现网上的中文教程实在是比较。。。一言难尽，而我又需要讲的比较仔细，因此就决定自己写一份，就给我这样的新（cai）手（ji）做个参考叭。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SQL数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/11/Android-SQLite/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1055,6 +1086,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">图形学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">数字图像处理</a>
               </li>
              
               <li class="article-tag-list-item">
