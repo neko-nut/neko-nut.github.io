@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://neko-nut.github.io/2024/05/05/FourierImage/FourierImage.jpg">
 <meta property="og:image" content="http://neko-nut.github.io/2024/05/05/FourierImage/convonlution.png">
 <meta property="article:published_time" content="2024-05-05T09:28:31.000Z">
-<meta property="article:modified_time" content="2024-05-05T09:28:31.731Z">
+<meta property="article:modified_time" content="2024-05-05T09:35:04.119Z">
 <meta property="article:author" content="黑猫">
 <meta property="article:tag" content="图形学">
 <meta property="article:tag" content="数字图像处理">
@@ -184,6 +184,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在图形学和计算机视觉的学习中，总是会看到大名鼎鼎傅里叶变换，但学了以后仿佛又没再用过了，搞不明白也仿佛完全不影响后续的学习，因此学了几次我都完全没明白。在最近又双叒叕学到这个名词以后，我终于决心把它一次性折腾个明白，顺便写一篇博客给以后的自己复习。当然傅里叶变换背后有一整套数学逻辑，且涉及傅里叶变换的其实都属于数字图像处理这一范畴，而这其中的复杂内容可以单独成课的。因此我这里只大略的涉及了它在图形图像方面应用的一些理论和逻辑（本来想深入研究，但是实在看不懂 QAQ 数学不是这点篇幅可以深入的）。考虑到数字信号本身就是基于数学人工生成的信号，在数学上的本质就是函数表达式，且本文的重点还是倾向于图形学，因此后文中信号、函数等名词使用可能非常混乱 = _ =。</p>
+<span id="more"></span>
 <h2 id="数字信号：时域与频域"><a href="#数字信号：时域与频域" class="headerlink" title="数字信号：时域与频域"></a>数字信号：时域与频域</h2><p>时域（time domain）描述信号随时间如何变化。对于一维波而言，时域图的 x 轴单位为时间 t，y 轴单位为振幅 A。时域图描述了不同时间时波的状态，t = 0 时 y 的值表当前波的振幅，t = 10 的 y 值表 10 单位时间之前波的振幅。</p>
 <p>频域（frequency domain）描述的是组成信号的正弦波的振幅随频率变化。基于波的叠加原理，任何一个数字信号都可以拆解成若干个不频率不同振幅的正弦波。一维信号的频域图的 x 轴表示这些波的频率，而 y 轴则表示这个频率对应波的振幅。</p>
 <p>归根究底，时域和频域只是对信号的不同表现形式，因此一个信号理应有一个在时域上的表现形式和在一个频域上的表现形式，区别只是信号不同表现形式下方便做不同的处理。而傅里叶变换就是那个将信号在时域和频域之间相互转换的变换。</p>
