@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://neko-nut.github.io">
   <title>渲染流程硬件篇 | 黑猫の坚果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于本来计划写一篇博客梳理整个渲染流程，但写着写着就发现一篇博客根本没法囊括我所有想要梳理的东西，所以就只能分成很多篇来写啦。这篇主要是准备写一下相关的硬件设施，即 CPU、GPU 和显示屏在这整个渲染流程中所起的作用，他们之间的通信方式，以及他们分别对渲染流程的影响。">
+  <meta name="description" content="关于本来计划写一篇博客梳理整个渲染流程，但写着写着就发现一篇博客根本没法囊括我所有想要梳理的东西，所以就只能分成很多篇来写啦。这篇主要是准备写一下相关的硬件设施，即 CPU、GPU 和显示屏在这整个渲染流程中所起的作用，他们之间的通信方式，以及他们分别对渲染流程的影响。 CPUCPU 主要负责一些数据的预处理。这些处理可以由开发者全权掌握。首先，CPU 会从文件或代码中获得需要渲染的内容，如模型的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渲染流程硬件篇">
 <meta property="og:url" content="http://neko-nut.github.io/2024/10/23/DrawCubeHardware/index.html">
 <meta property="og:site_name" content="黑猫の坚果">
-<meta property="og:description" content="关于本来计划写一篇博客梳理整个渲染流程，但写着写着就发现一篇博客根本没法囊括我所有想要梳理的东西，所以就只能分成很多篇来写啦。这篇主要是准备写一下相关的硬件设施，即 CPU、GPU 和显示屏在这整个渲染流程中所起的作用，他们之间的通信方式，以及他们分别对渲染流程的影响。">
+<meta property="og:description" content="关于本来计划写一篇博客梳理整个渲染流程，但写着写着就发现一篇博客根本没法囊括我所有想要梳理的东西，所以就只能分成很多篇来写啦。这篇主要是准备写一下相关的硬件设施，即 CPU、GPU 和显示屏在这整个渲染流程中所起的作用，他们之间的通信方式，以及他们分别对渲染流程的影响。 CPUCPU 主要负责一些数据的预处理。这些处理可以由开发者全权掌握。首先，CPU 会从文件或代码中获得需要渲染的内容，如模型的">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-10-22T16:05:32.644Z">
-<meta property="article:modified_time" content="2024-10-22T16:18:52.562Z">
+<meta property="article:modified_time" content="2024-10-22T16:28:17.665Z">
 <meta property="article:author" content="黑猫">
 <meta property="article:tag" content="图形学">
 <meta property="article:tag" content="硬件">
@@ -181,8 +181,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h2><p>本来计划写一篇博客梳理整个渲染流程，但写着写着就发现一篇博客根本没法囊括我所有想要梳理的东西，所以就只能分成很多篇来写啦。这篇主要是准备写一下相关的硬件设施，即 CPU、GPU 和显示屏在这整个渲染流程中所起的作用，他们之间的通信方式，以及他们分别对渲染流程的影响。</p>
-<span id="more"></span>
 <h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p>CPU 主要负责一些数据的预处理。这些处理可以由开发者全权掌握。首先，CPU 会从文件或代码中获得需要渲染的内容，如模型的顶点位置信息、贴图坐标、法向量等信息。根据用户/程序员的输入小方块相对世界坐标的位置，相机的各项信息，纹理的图片文件，以及其他任何相关信息。在软件的运行过程中，CPU 会逐步将对应的数据存入 buffer（显存）中，并指定其 ID，以方便 GPU 读取。</p>
+<span id="more"></span>
 <p>此外，CPU 还控制着每一帧的循环。在每一帧开始渲染之前，CPU 需要指定 shader 中每一个参数对应在 buffer 中的 ID。同时，所有逐帧变化的参数（如位移或旋转）也会由 CPU 进行计算，并在循环中更新 buffer。有时为了优化渲染、减轻 GPU 压力，CPU 还会进行一些其他计算，如剔除看不见的元素，只要求 GPU 渲染当前可见的物体。在所有数据准备妥当以后，CPU 会发布渲染指令（draw call），要求 GPU 渲染指定的物体。</p>
 <h2 id="图形-API"><a href="#图形-API" class="headerlink" title="图形 API"></a>图形 API</h2><p>图形 API 是 CPU 和 GPU 交互的接口，以及 shader 的编译器，不同的图形 API 有不同的 shader 语言。但总体而言，程序员可以调用图形 API 来指定 GPU 相关流程的处理方式、显存和计算单元的交互等。</p>
 <h2 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h2><p>GPU 是计算机处理图形的主要硬件。它约等于我们平时所说的显卡（Graphics card），但其实 GPU 和显卡还是有一些区别的。显卡包括了散热器、通讯元件、各种插槽等等，而 GPU 是显卡的核心部分，即存储和计算单元。相比 CPU，GPU 拥有更多的算数运算单元（ALU），更少的内存和控制单元（负责内存交互、将计算结果传输给另一个计算单元等）。因此 GPU 更擅长大规模并行计算，而十分不擅长处理复杂的逻辑控制单元。此外，GPU 无法进行分支预测，因此需要尽可能避免在 GPU 中处理分支结构（即 if、else）。</p>
